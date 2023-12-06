@@ -2,6 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NoteList from "./NotesList"
 import { getNotes } from "../utils/notes";
+import { Container } from "react-bootstrap";
 
 class NotesApp extends React.Component{
     constructor(props){
@@ -14,15 +15,16 @@ class NotesApp extends React.Component{
 
     render(){
         return (
-            <div className="notes-app">
+            <Container className="notes-app">
                 <h1>Notes App</h1>
                 <p>make your notes, elevate your works</p>
 
                 <h2>Recent Notes</h2>
-                <NoteList notes={this.state.notes}/>
+                <NoteList notes={this.state.notes} isArchived={false}/>
 
                 <h2>Archive Notes</h2>
-            </div>
+                <NoteList notes={this.state.notes} isArchived={true}/>
+            </Container>
         )
     }
 }
