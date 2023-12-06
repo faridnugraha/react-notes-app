@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
 class NoteInput extends React.Component{
     constructor(props){
@@ -30,11 +30,22 @@ class NoteInput extends React.Component{
 
     render(){
         return(
-            <form className="contact-input" onSubmit={this.onSubmitEventHandler}>
-                <input type="text" placeholder="Insert title..." onChange={this.onTitleChangeEventHandler} />
-                <input type="text" placeholder="Insert body..." onChange={this.onBodyChangeEventHandler} />
-                <button type="submit">Add</button>
-            </form>
+            <Form onSubmit={this.onSubmitEventHandler}>
+                <Form.Group className="mb-3" controlId="title">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control type="text" placeholder="Enter title" onChange={this.onTitleChangeEventHandler} />
+                    <Form.Text className="text-muted">
+                        Max 30 Letter
+                    </Form.Text>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="body">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control type="text" placeholder="Enter body" onChange={this.onBodyChangeEventHandler} />
+                </Form.Group>
+                <Button variant="success" type="submit">
+                Submit
+                </Button>
+            </Form>
         )
     }
 }
