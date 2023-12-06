@@ -11,6 +11,13 @@ class NotesApp extends React.Component{
         this.state = {
             notes: getNotes()
         }
+
+        this.onDeleteNoteHandler = this.onDeleteNoteHandler.bind(this)
+    }
+
+    onDeleteNoteHandler(id){
+        const notes = this.state.notes.filter(note => note.id !== id)
+        this.setState({notes})
     }
 
     render(){
@@ -20,10 +27,10 @@ class NotesApp extends React.Component{
                 <p>make your notes, elevate your works</p>
 
                 <h2>Recent Notes</h2>
-                <NoteList notes={this.state.notes} isArchived={false}/>
+                <NoteList notes={this.state.notes} isArchived={false} onDelete={this.onDeleteNoteHandler}/>
 
                 <h2>Archive Notes</h2>
-                <NoteList notes={this.state.notes} isArchived={true}/>
+                <NoteList notes={this.state.notes} isArchived={true} onDelete={this.onDeleteNoteHandler}/>
             </Container>
         )
     }
