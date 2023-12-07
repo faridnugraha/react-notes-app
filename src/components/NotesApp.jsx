@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NoteList from "./NotesList"
+import NoteSearch from "./NoteSearch"
 import NoteInput from "./NoteInput"
 import { getNotes } from "../utils/notes";
 import { Container } from "react-bootstrap";
@@ -17,6 +18,7 @@ class NotesApp extends React.Component{
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this)
         // this.onArchiveToggleHandler1 = this.onArchiveToggleHandler1.bind(this)
         this.onArchiveToggleHandler2 = this.onArchiveToggleHandler2.bind(this)
+        this.onSearchNoteEventHandler = this.onSearchNoteEventHandler.bind(this)
     }
 
     onDeleteNoteHandler(id){
@@ -40,6 +42,12 @@ class NotesApp extends React.Component{
                 ]
             }
         })
+    }
+
+    onSearchNoteEventHandler(keyword){
+        const notes = getNotes()
+        const filteredNotes = notes.filter(note => note.title.toLowerCase().includes(keyword.toLowerCase()))
+        this.setState({notes: filteredNotes})
     }
 
     // onArchiveToggleHandler1(id){
@@ -66,6 +74,7 @@ class NotesApp extends React.Component{
                 <h1>Notes App</h1>
                 <p>make your notes, elevate your works</p>
                 <NoteInput addNote={this.onAddNoteHandler}/>
+                <NoteSearch onSearch={this.onSearchNoteEventHandler}/>
 
                 <h2>Recent Notes</h2>
                 <NoteList notes={this.state.notes} isArchived={false} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>

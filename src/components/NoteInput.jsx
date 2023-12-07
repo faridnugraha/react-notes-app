@@ -7,6 +7,7 @@ class NoteInput extends React.Component{
 
         this.state = {
             title: '',
+            titleCounter: 20,
             body: '',
             show: false
         }
@@ -19,7 +20,13 @@ class NoteInput extends React.Component{
     }
    
     onTitleChangeEventHandler(ev){
-        this.setState(()=> ({title: ev.target.value}))
+        // let titleCurrentLength = this.state.titleMaxLength - ev.target.value.length
+        const titleCurrentLength = ev.target.value.length
+        const titleMaxLength = 20
+        console.log(titleCurrentLength)
+        if(titleCurrentLength <= titleMaxLength){
+            this.setState(()=> ({title: ev.target.value, titleCounter: titleMaxLength - titleCurrentLength}))
+        } 
     }
 
     onBodyChangeEventHandler(ev){
@@ -52,13 +59,13 @@ class NoteInput extends React.Component{
                     <Form onSubmit={this.onSubmitEventHandler}>
                         <Form.Group className="mb-3" controlId="title">
                             <Form.Label>Title</Form.Label>
-                            <Form.Control type="text" placeholder="Enter title" onChange={this.onTitleChangeEventHandler} />
+                            <Form.Control type="text" placeholder="Enter title" maxLength={20} onChange={this.onTitleChangeEventHandler} />
                             <Form.Text className="text-muted">
-                                Max 30 Letter
+                                {this.state.titleCounter}
                             </Form.Text>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="body">
-                            <Form.Label>Title</Form.Label>
+                            <Form.Label>Body</Form.Label>
                             <Form.Control type="text" placeholder="Enter body" onChange={this.onBodyChangeEventHandler} />
                         </Form.Group>
                         <Button variant="success" type="submit">
