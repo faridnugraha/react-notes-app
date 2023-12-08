@@ -4,7 +4,7 @@ import NoteList from "./NotesList"
 import NoteSearch from "./NoteSearch"
 import NoteInput from "./NoteInput"
 import { getNotes } from "../utils/notes";
-import { Container } from "react-bootstrap";
+import { Container, Tab, Tabs } from "react-bootstrap";
 
 class NotesApp extends React.Component{
     constructor(props){
@@ -88,11 +88,14 @@ class NotesApp extends React.Component{
                 <NoteInput addNote={this.onAddNoteHandler}/>
                 <NoteSearch onSearch={this.onSearchNoteEventHandler}/>
 
-                <h2>Recent Notes</h2>
-                <NoteList notes={this.state.notes} isArchived={false} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
-
-                <h2>Archive Notes</h2>
-                <NoteList notes={this.state.notes} isArchived={true} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
+                <Tabs defaultActiveKey="recent" id="category-tab" className="my-3" fill>
+                    <Tab eventKey="recent" title="recent">
+                        <NoteList notes={this.state.notes} isArchived={false} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
+                    </Tab>
+                    <Tab eventKey="archive" title="archive">
+                        <NoteList notes={this.state.notes} isArchived={true} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
+                    </Tab>
+                </Tabs>
             </Container>
         )
     }
