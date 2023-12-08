@@ -23,7 +23,6 @@ class NoteInput extends React.Component{
         // let titleCurrentLength = this.state.titleMaxLength - ev.target.value.length
         const titleCurrentLength = ev.target.value.length
         const titleMaxLength = 20
-        console.log(titleCurrentLength)
         if(titleCurrentLength <= titleMaxLength){
             this.setState(()=> ({title: ev.target.value, titleCounter: titleMaxLength - titleCurrentLength}))
         } 

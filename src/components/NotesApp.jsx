@@ -11,19 +11,20 @@ class NotesApp extends React.Component{
         super(props)
 
         this.state = {
-            notes: getNotes()
+            notes: getNotes(),
+            unfilteredNotes: getNotes()
         }
 
         this.onDeleteNoteHandler = this.onDeleteNoteHandler.bind(this)
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this)
-        // this.onArchiveToggleHandler1 = this.onArchiveToggleHandler1.bind(this)
         this.onArchiveToggleHandler2 = this.onArchiveToggleHandler2.bind(this)
         this.onSearchNoteEventHandler = this.onSearchNoteEventHandler.bind(this)
     }
 
     onDeleteNoteHandler(id){
         const notes = this.state.notes.filter(note => note.id !== id)
-        this.setState({notes})
+        const unfilteredNotes = this.state.unfilteredNotes.filter(note => note.id !== id)
+        this.setState({notes, unfilteredNotes})
     }
 
     onAddNoteHandler({title, body}){
@@ -38,6 +39,16 @@ class NotesApp extends React.Component{
                         body: body,
                         archived: false,
                         createdAt: currentDate.toJSON()
+                    },
+                ],
+                unfilteredNotes: [
+                    ...prevState.unfilteredNotes,
+                    {
+                        id: +new Date(),
+                        title: title,
+                        body: body,
+                        archived: false,
+                        createdAt: currentDate.toJSON()
                     }
                 ]
             }
@@ -45,18 +56,13 @@ class NotesApp extends React.Component{
     }
 
     onSearchNoteEventHandler(keyword){
-        const notes = getNotes()
-        const filteredNotes = notes.filter(note => note.title.toLowerCase().includes(keyword.toLowerCase()))
-        this.setState({notes: filteredNotes})
+        if(keyword.length !== 0){
+            const notes = this.state.unfilteredNotes.filter((note) => note.title.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()))
+            this.setState({notes})
+        } else{
+            this.setState({notes: this.state.unfilteredNotes})
+        }
     }
-
-    // onArchiveToggleHandler1(id){
-    //     const noteIndex = this.state.notes.findIndex((note) => note.id === id)
-    //     const updatedNote = {...this.state.notes[noteIndex], archived:!this.state.notes[noteIndex].archived}
-    //     const newNotes = [...this.state.notes]
-    //     newNotes[noteIndex] = updatedNote
-    //     this.setState({notes: newNotes})
-    // }
 
     onArchiveToggleHandler2(id){
         const notes = this.state.notes.map(note => {
@@ -65,7 +71,13 @@ class NotesApp extends React.Component{
             }
             return note
         })
-        this.setState({notes})
+        const unfilteredNotes = this.state.unfilteredNotes.map(note => {
+            if(note.id === id){
+                return {...note, archived:!note.archived}
+            }
+            return note
+        })
+        this.setState({notes: notes, unfilteredNotes: unfilteredNotes})
     }
 
     render(){
