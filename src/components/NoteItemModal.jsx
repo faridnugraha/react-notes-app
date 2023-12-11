@@ -1,17 +1,17 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
-function NoteItemContent({id, title, body, archived, show, onArchiveToggle, onDelete, onHide}){
+function NoteItemContent({id, title, body, archived, showNoteModal, onArchiveToggle, onDelete, onHide}){
     return(
         <Modal
-        show={show}
+        show={showNoteModal}
         onHide={onHide}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
         >
             <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
+                <Modal.Title id="contained-modal-content-title-vcenter">
                 {title}
                 </Modal.Title>
             </Modal.Header>

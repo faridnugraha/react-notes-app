@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Row, Col, Card } from "react-bootstrap"
-import NoteItemContent from "./NoteItemModal";
+import NoteItemModal from "./NoteItemModal";
+import NoteDeleteModal from "./NoteDeleteModal";
 
 class NoteItem extends React.Component{
     constructor(props){
@@ -10,10 +11,10 @@ class NoteItem extends React.Component{
             showNoteModal: false
         }
 
-        this.modalHandler = this.modalHandler.bind(this)
+        this.contentModalHandler = this.contentModalHandler.bind(this)
     }
 
-    modalHandler(show){
+    contentModalHandler(show){
         this.setState(() => ({showNoteModal: show}))
     }
 
@@ -21,7 +22,7 @@ class NoteItem extends React.Component{
         return(
             <>
                 <Col xs={12} sm={12} md={6} lg={4} xl={3}>
-                    <Card style={{ width: '18rem' }} id="note-item" onClick={() => this.modalHandler(true)}>
+                    <Card style={{ width: '18rem' }} id="note-item" onClick={() => this.contentModalHandler(true)}>
                         <Card.Body className="pb-0">
                             <Card.Title>{this.props.title}</Card.Title>
                             <Card.Text style={{
@@ -45,15 +46,16 @@ class NoteItem extends React.Component{
                         </div>
                     </Card>
                 </Col>
-                <NoteItemContent 
+
+                <NoteItemModal 
                     id={this.props.id} 
                     title={this.props.title} 
                     body={this.props.body} 
                     archived={this.props.archived}
-                    show={this.state.showNoteModal} 
+                    showNoteModal={this.state.showNoteModal} 
                     onArchiveToggle={this.props.onArchiveToggle}
                     onDelete={this.props.onDelete}
-                    onHide={() => this.modalHandler(false)}/>
+                    onHide={() => this.contentModalHandler(false)}/>
             </>
         )
     }
