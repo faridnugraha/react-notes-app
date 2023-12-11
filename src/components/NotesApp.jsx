@@ -84,15 +84,14 @@ class NotesApp extends React.Component{
         return (
             <Container className="notes-app">
                 <h1>Notes App</h1>
-                <p>make your notes, elevate your works</p>
                 <NoteInput addNote={this.onAddNoteHandler}/>
                 <NoteSearch onSearch={this.onSearchNoteEventHandler}/>
 
                 <Tabs defaultActiveKey="recent" id="category-tab" className="my-3" fill>
-                    <Tab eventKey="recent" title="recent">
+                    <Tab eventKey="recent" title="Recent">
                         <NoteList notes={this.state.notes} isArchived={false} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
                     </Tab>
-                    <Tab eventKey="archive" title="archive">
+                    <Tab eventKey="archive" title="Archive">
                         <NoteList notes={this.state.notes} isArchived={true} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
                     </Tab>
                 </Tabs>

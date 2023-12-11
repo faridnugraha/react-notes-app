@@ -47,25 +47,32 @@ class NoteInput extends React.Component{
     render(){
         return(
             <>
-                <Button variant="primary" onClick={this.handleShow} className="me-2">
-                    +
-                </Button>
+                <div className="mb-3 d-flex align-items-center">
+                    <p className="mb-0">
+                        make your notes, elevate your works
+                    </p>
+                    <Button variant="primary" onClick={this.handleShow} className="ms-2 pt-2 rounded-circle">
+                        <span className="material-symbols-outlined">
+                            stylus_note
+                        </span>
+                    </Button>
+                </div>
                 <Offcanvas show={this.state.show} onHide={this.handleClose} placement="end" name="end">
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title>Insert Data</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                     <Form onSubmit={this.onSubmitEventHandler}>
-                        <Form.Group className="mb-3" controlId="title">
+                        <Form.Group className="mb-3">
                             <Form.Label>Title</Form.Label>
-                            <Form.Control type="text" placeholder="Enter title" maxLength={20} onChange={this.onTitleChangeEventHandler} />
+                            <Form.Control type="text" placeholder="Enter title" maxLength={20} onChange={this.onTitleChangeEventHandler} autoFocus={true} />
                             <Form.Text className="text-muted">
                                 {this.state.titleCounter}
                             </Form.Text>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="body">
+                        <Form.Group className="mb-3">
                             <Form.Label>Body</Form.Label>
-                            <Form.Control type="text" placeholder="Enter body" onChange={this.onBodyChangeEventHandler} />
+                            <Form.Control id="note-input__body" type="text" as="textarea" placeholder="Enter body" onChange={this.onBodyChangeEventHandler} />
                         </Form.Group>
                         <Button variant="success" type="submit">
                             Submit
