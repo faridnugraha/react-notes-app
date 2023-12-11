@@ -7,7 +7,7 @@ function ToastNotification({msg, showToast, toastHandler}){
         <div
             aria-live="polite"
             aria-atomic="true"
-            className="position-relative"
+            className="position-relative" 
         >
             <ToastContainer
             className="p-3"
