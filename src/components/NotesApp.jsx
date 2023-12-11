@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import NoteList from "./NotesList"
 import NoteSearch from "./NoteSearch"
 import NoteInput from "./NoteInput"
+import ToastNotification from "./ToastNotification"
 import { getNotes } from "../utils/notes";
 import { Container, Tab, Tabs } from "react-bootstrap";
 
@@ -12,7 +13,9 @@ class NotesApp extends React.Component{
 
         this.state = {
             notes: getNotes(),
-            unfilteredNotes: getNotes()
+            unfilteredNotes: getNotes(),
+            showToast: false,
+            toastMsg: ""
         }
 
         this.onDeleteNoteHandler = this.onDeleteNoteHandler.bind(this)
@@ -21,9 +24,14 @@ class NotesApp extends React.Component{
         this.onSearchNoteEventHandler = this.onSearchNoteEventHandler.bind(this)
     }
 
+    toastHandler(show, msg=""){
+        this.setState(() => ({showToast: show, toastMsg: msg}))
+    }
+
     onDeleteNoteHandler(id){
         const notes = this.state.notes.filter(note => note.id !== id)
         const unfilteredNotes = this.state.unfilteredNotes.filter(note => note.id !== id)
+        this.setState(() => ({showToast:true, toastMsg:"Note has been deleted."}))
         this.setState({notes, unfilteredNotes})
     }
 
@@ -82,20 +90,24 @@ class NotesApp extends React.Component{
 
     render(){
         return (
-            <Container className="notes-app">
-                <h1>Notes App</h1>
-                <NoteInput addNote={this.onAddNoteHandler}/>
-                <NoteSearch onSearch={this.onSearchNoteEventHandler}/>
+            <>
+                <Container className="notes-app">
+                    <h1>Notes App</h1>
+                    <NoteInput addNote={this.onAddNoteHandler}/>
+                    <NoteSearch onSearch={this.onSearchNoteEventHandler}/>
 
-                <Tabs defaultActiveKey="recent" id="category-tab" className="my-3" fill>
-                    <Tab eventKey="recent" title="Recent">
-                        <NoteList notes={this.state.notes} isArchived={false} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
-                    </Tab>
-                    <Tab eventKey="archive" title="Archive">
-                        <NoteList notes={this.state.notes} isArchived={true} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
-                    </Tab>
-                </Tabs>
-            </Container>
+                    <Tabs defaultActiveKey="recent" id="category-tab" className="my-3" fill>
+                        <Tab eventKey="recent" title="Recent">
+                            <NoteList notes={this.state.notes} isArchived={false} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
+                        </Tab>
+                        <Tab eventKey="archive" title="Archive">
+                            <NoteList notes={this.state.notes} isArchived={true} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
+                        </Tab>
+                    </Tabs>
+
+                </Container>
+                <ToastNotification msg={this.state.toastMsg} showToast={this.state.showToast} toastHandler={this.toastHandler}/>
+            </>
         )
     }
 }
