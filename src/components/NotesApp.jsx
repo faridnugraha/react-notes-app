@@ -22,6 +22,7 @@ class NotesApp extends React.Component{
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this)
         this.onArchiveToggleHandler2 = this.onArchiveToggleHandler2.bind(this)
         this.onSearchNoteEventHandler = this.onSearchNoteEventHandler.bind(this)
+        this.toastHandler = this.toastHandler.bind(this)
     }
 
     toastHandler(show, msg=""){
@@ -29,10 +30,12 @@ class NotesApp extends React.Component{
     }
 
     onDeleteNoteHandler(id){
-        const notes = this.state.notes.filter(note => note.id !== id)
-        const unfilteredNotes = this.state.unfilteredNotes.filter(note => note.id !== id)
-        this.setState(() => ({showToast:true, toastMsg:"Note has been deleted."}))
-        this.setState({notes, unfilteredNotes})
+        if(confirm("Are you sure want to delete this note?")){
+            const notes = this.state.notes.filter(note => note.id !== id)
+            const unfilteredNotes = this.state.unfilteredNotes.filter(note => note.id !== id)
+            this.setState({notes, unfilteredNotes})
+            this.setState(() => ({showToast:true, toastMsg:"Note has been deleted."}))
+        }
     }
 
     onAddNoteHandler({title, body}){
@@ -61,6 +64,8 @@ class NotesApp extends React.Component{
                 ]
             }
         })
+        
+        this.setState(() => ({showToast:true, toastMsg:"Note has been added."}))
     }
 
     onSearchNoteEventHandler(keyword){
@@ -73,26 +78,31 @@ class NotesApp extends React.Component{
     }
 
     onArchiveToggleHandler2(id){
+        let archiveStatus = true
         const notes = this.state.notes.map(note => {
             if(note.id === id){
-                return {...note, archived:!note.archived}
+                archiveStatus = !note.archived
+                return {...note, archived:archiveStatus}
             }
             return note
         })
         const unfilteredNotes = this.state.unfilteredNotes.map(note => {
             if(note.id === id){
-                return {...note, archived:!note.archived}
+                archiveStatus = !note.archived
+                return {...note, archived:archiveStatus}
             }
             return note
         })
+        const toastMsg = archiveStatus?"Note has been archive":"Note has been removed from archive"
         this.setState({notes: notes, unfilteredNotes: unfilteredNotes})
+        this.setState(() => ({showToast:true, toastMsg:toastMsg}))
     }
 
     render(){
         return (
             <>
                 <Container className="notes-app">
-                    <h1>Notes App</h1>
+                    <h1 id="app-title">Notes App</h1>
                     <NoteInput addNote={this.onAddNoteHandler}/>
                     <NoteSearch onSearch={this.onSearchNoteEventHandler}/>
 

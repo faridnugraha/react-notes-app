@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Row, Col, Card } from "react-bootstrap"
 import NoteItemModal from "./NoteItemModal";
-import NoteDeleteModal from "./NoteDeleteModal";
 
 class NoteItem extends React.Component{
     constructor(props){
@@ -12,10 +11,16 @@ class NoteItem extends React.Component{
         }
 
         this.contentModalHandler = this.contentModalHandler.bind(this)
+        this.deleteButtonHandler = this.deleteButtonHandler.bind(this)
     }
 
     contentModalHandler(show){
         this.setState(() => ({showNoteModal: show}))
+    }
+
+    deleteButtonHandler(ev){
+        ev.stopPropagation()
+        this.props.onDelete(this.props.id)
     }
 
     render(){
@@ -40,7 +45,7 @@ class NoteItem extends React.Component{
                             <Button variant="warning" className="me-2 rounded-circle pt-2" onClick={() => this.props.onArchiveToggle(this.props.id)}>
                                 <span className="material-symbols-outlined">{this.props.archived?"unarchive":"archive"}</span>
                             </Button>
-                            <Button variant="danger" className="rounded-circle pt-2" onClick={() => this.props.onDelete(this.props.id)}>
+                            <Button variant="danger" className="rounded-circle pt-2" onClick={this.deleteButtonHandler}>
                                 <span className="material-symbols-outlined">delete</span>
                             </Button>
                         </div>

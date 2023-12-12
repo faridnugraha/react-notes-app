@@ -7,7 +7,7 @@ function ToastNotification({msg, showToast, toastHandler}){
         <div
             aria-live="polite"
             aria-atomic="true"
-            className="position-relative" 
+            className="position-position-absolute top-0 end-0" 
         >
             <ToastContainer
             className="p-3"
@@ -15,7 +15,8 @@ function ToastNotification({msg, showToast, toastHandler}){
             style={{ zIndex: 1 }}
             >
                 <Toast onClose={() => toastHandler(false)} show={showToast} delay={3000} autohide>
-                    <Toast.Header closeButton={false}>
+                    <Toast.Header>
+                        <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
                         <strong className="me-auto">Notification</strong>
                     </Toast.Header>
                     <Toast.Body>{msg}</Toast.Body>
