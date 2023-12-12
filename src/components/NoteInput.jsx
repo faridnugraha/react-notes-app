@@ -59,22 +59,22 @@ class NoteInput extends React.Component{
                 </div>
                 <Offcanvas show={this.state.show} onHide={this.handleClose} placement="end" name="end">
                     <Offcanvas.Header closeButton>
-                        <Offcanvas.Title>Insert Data</Offcanvas.Title>
+                        <Offcanvas.Title className="fw-bolder">Insert Your Note</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                     <Form onSubmit={this.onSubmitEventHandler}>
                         <Form.Group className="mb-3">
-                            <Form.Label>Title</Form.Label>
+                            <Form.Label className="fw-bolder">Title</Form.Label>
                             <Form.Control type="text" placeholder="Enter title" maxLength={20} onChange={this.onTitleChangeEventHandler} autoFocus={true} />
                             <Form.Text className="text-muted">
-                                {this.state.titleCounter}
+                                character limit: {this.state.titleCounter}
                             </Form.Text>
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label>Body</Form.Label>
+                            <Form.Label className="fw-bolder">Body</Form.Label>
                             <Form.Control id="note-input__body" type="text" as="textarea" placeholder="Enter body" onChange={this.onBodyChangeEventHandler} />
                         </Form.Group>
-                        <Button variant="success" type="submit">
+                        <Button variant="primary" type="submit">
                             Submit
                         </Button>
                     </Form>

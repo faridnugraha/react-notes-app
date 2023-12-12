@@ -1,0 +1,48 @@
+.tabs-custom{
+    width: fit-content;
+}
+
+.tabs-custom li{
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.tabs-custom li button{
+    font-size: 18px;
+    font-weight: 300;
+    background-color: #ddd;
+    color: rgb(94, 94, 94);
+    border-radius: 50px !important;
+}
+
+.tabs-custom li button:hover{
+    background-color: #cfcfcf;
+    color: rgb(94, 94, 94);
+}
+
+.tabs-custom li button.active{
+    font-weight: 400;
+}
+
+#note-input__body{
+    min-height: 100px;
+}
+
+.note-item{
+    cursor: pointer;
+    min-height: 275px;
+    background-color: #fff;
+    border: none;
+    box-shadow: 2px 2px 25px 3px #f0f0f0;
+    transition: 0.2s;
+    font-size: 15px;
+}
+
+.note-item:hover{
+    transform: translateY(-3px);
+    box-shadow: 2px 3px 25px 5px #e0e0e0;
+}
+
+.note-item__title{
+    font-weight: 800;
+}

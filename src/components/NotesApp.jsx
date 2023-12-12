@@ -5,7 +5,7 @@ import NoteSearch from "./NoteSearch"
 import NoteInput from "./NoteInput"
 import ToastNotification from "./ToastNotification"
 import { getNotes } from "../utils/notes";
-import { Container, Tab, Tabs } from "react-bootstrap";
+import { Container, Tab, Tabs, Row, Col } from "react-bootstrap";
 
 class NotesApp extends React.Component{
     constructor(props){
@@ -101,12 +101,19 @@ class NotesApp extends React.Component{
     render(){
         return (
             <>
+                <header>
+                    <Container>
+                        <Row>
+                            <Col md={6}>
+                                <h1 id="app-title">Notes App</h1>
+                                <NoteInput addNote={this.onAddNoteHandler}/>
+                                <NoteSearch onSearch={this.onSearchNoteEventHandler}/>
+                            </Col>
+                        </Row>
+                    </Container>
+                </header>
                 <Container className="notes-app">
-                    <h1 id="app-title">Notes App</h1>
-                    <NoteInput addNote={this.onAddNoteHandler}/>
-                    <NoteSearch onSearch={this.onSearchNoteEventHandler}/>
-
-                    <Tabs defaultActiveKey="recent" id="category-tab" className="my-3" fill>
+                    <Tabs variant="pills" defaultActiveKey="recent" id="category-tab" className="mt-4 mb-3 mx-auto tabs-custom" fill>
                         <Tab eventKey="recent" title="Recent">
                             <NoteList notes={this.state.notes} isArchived={false} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
                         </Tab>
@@ -114,7 +121,6 @@ class NotesApp extends React.Component{
                             <NoteList notes={this.state.notes} isArchived={true} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
                         </Tab>
                     </Tabs>
-
                 </Container>
                 <ToastNotification msg={this.state.toastMsg} showToast={this.state.showToast} toastHandler={this.toastHandler}/>
             </>

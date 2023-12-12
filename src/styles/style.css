@@ -3,6 +3,14 @@
     font-weight: 400;
 }
 
+body{
+    background-color: #FBFBFB;
+}
+
 #app-title{
     font-weight: 800;
+}
+
+.img-not-found{
+    max-width: 300px;
 }

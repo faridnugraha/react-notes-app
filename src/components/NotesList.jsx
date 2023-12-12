@@ -19,7 +19,9 @@ function NotesList({notes, isArchived, onDelete, onArchiveToggle}){
     } else{
         return (
             <div className="text-center">
-                <h3 className="mt-5">Data Not Found :(</h3>
+               <img src="/images/not-found.png" alt="Data Not Found :(" className="img-not-found img-fluid"/>
+               <h4>Uh-oh, no notes here!</h4>
+               <p className="text-muted">Ready to fill the canvas?</p>
             </div>
         )
     }

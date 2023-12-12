@@ -27,22 +27,22 @@ class NoteItem extends React.Component{
         return(
             <>
                 <Col xs={12} sm={12} md={6} lg={4} xl={3}>
-                    <Card style={{ width: '18rem' }} id="note-item" onClick={() => this.contentModalHandler(true)}>
+                    <Card className="note-item" onClick={() => this.contentModalHandler(true)}>
                         <Card.Body className="pb-0">
-                            <Card.Title>{this.props.title}</Card.Title>
+                            <Card.Title className="note-item__title">{this.props.title}</Card.Title>
                             <Card.Text style={{
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
                                 display: "-webkit-box",
-                                lineClamp: 7,
-                                WebkitLineClamp: 7,
+                                lineClamp: 6,
+                                WebkitLineClamp: 6,
                                 WebkitBoxOrient: "vertical",
                             }}>
                                 {this.props.body}
                             </Card.Text>
                         </Card.Body>
                         <div className="d-flex justify-content-end me-3 my-3">
-                            <Button variant="warning" className="me-2 rounded-circle pt-2" onClick={() => this.props.onArchiveToggle(this.props.id)}>
+                            <Button variant="secondary" className="me-2 rounded-circle pt-2" onClick={() => this.props.onArchiveToggle(this.props.id)}>
                                 <span className="material-symbols-outlined">{this.props.archived?"unarchive":"archive"}</span>
                             </Button>
                             <Button variant="danger" className="rounded-circle pt-2" onClick={this.deleteButtonHandler}>

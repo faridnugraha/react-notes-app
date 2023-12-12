@@ -19,7 +19,7 @@ function NoteItemContent({id, title, body, archived, showNoteModal, onArchiveTog
                 <p>{body}</p>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="warning" className="me-2 rounded-circle pt-2" onClick={() => onArchiveToggle(id)}>
+                <Button variant="secondary" className="me-2 rounded-circle pt-2" onClick={() => onArchiveToggle(id)}>
                     <span className="material-symbols-outlined">{archived?"unarchive":"archive"}</span>
                 </Button>
                 <Button variant="danger" className="rounded-circle pt-2" onClick={() => onDelete(id)}>
