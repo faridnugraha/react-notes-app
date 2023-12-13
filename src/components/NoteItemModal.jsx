@@ -1,7 +1,8 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import NoteManageButton from "./NoteManageButton";
 
-function NoteItemContent({id, title, body, archived, showNoteModal, onArchiveToggle, onDelete, onHide}){
+function NoteItemContent({id, title, body, archived, showNoteModal, onArchiveToggle, deleteButtonHandler, onHide}){
     return(
         <Modal
         show={showNoteModal}
@@ -19,12 +20,7 @@ function NoteItemContent({id, title, body, archived, showNoteModal, onArchiveTog
                 <p>{body}</p>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" className="me-2 rounded-circle pt-2" onClick={() => onArchiveToggle(id)}>
-                    <span className="material-symbols-outlined">{archived?"unarchive":"archive"}</span>
-                </Button>
-                <Button variant="danger" className="rounded-circle pt-2" onClick={() => onDelete(id)}>
-                    <span className="material-symbols-outlined">delete</span>
-                </Button>
+                <NoteManageButton id={id} archived={archived} onArchiveToggle={onArchiveToggle} deleteButtonHandler={deleteButtonHandler}/>
             </Modal.Footer>
         </Modal>
     )
