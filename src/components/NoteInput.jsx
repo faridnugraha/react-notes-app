@@ -65,14 +65,14 @@ class NoteInput extends React.Component{
                     <Form onSubmit={this.onSubmitEventHandler}>
                         <Form.Group className="mb-3">
                             <Form.Label className="fw-bolder">Title</Form.Label>
-                            <Form.Control type="text" placeholder="Enter title" maxLength={20} onChange={this.onTitleChangeEventHandler} autoFocus={true} />
+                            <Form.Control type="text" placeholder="Enter title" maxLength={20} onChange={this.onTitleChangeEventHandler} required/>
                             <Form.Text className="text-muted">
                                 character limit: {this.state.titleCounter}
                             </Form.Text>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label className="fw-bolder">Body</Form.Label>
-                            <Form.Control id="note-input__body" type="text" as="textarea" placeholder="Enter body" onChange={this.onBodyChangeEventHandler} />
+                            <Form.Control id="note-input__body" type="text" as="textarea" placeholder="Enter body" onChange={this.onBodyChangeEventHandler} required/>
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Submit
