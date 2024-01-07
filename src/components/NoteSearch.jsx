@@ -1,5 +1,6 @@
 import React from "react";
 import { Form } from "react-bootstrap";
+import { PropTypes } from 'prop-types'
 
 class NoteSearch extends React.Component{
     constructor(props){
@@ -22,6 +23,10 @@ class NoteSearch extends React.Component{
             <Form.Control type="text" placeholder="find your note" onChange={this.onKeywordEventHandler}/>
         )
     }
+}
+
+NoteSearch.propTypes = {
+    onSearch: PropTypes.func.isRequired
 }
 
 export default NoteSearch

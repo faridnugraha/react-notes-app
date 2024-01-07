@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Row, Col, Card } from "react-bootstrap"
 import NoteItemModal from "./NoteItemModal";
 import NoteManageButton from "./NoteManageButton";
+import { PropTypes } from 'prop-types'
 
 class NoteItem extends React.Component{
     constructor(props){
@@ -62,5 +63,13 @@ class NoteItem extends React.Component{
     }
 }
 
+NoteItem.propTypes = {
+    onDelete: PropTypes.func.isRequired,
+    onArchiveToggle: PropTypes.func.isRequired,
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    archived: PropTypes.bool.isRequired,
+}
 
 export default NoteItem;

@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { PropTypes } from 'prop-types'
 
 function NoteManageButton({id, archived, onArchiveToggle, deleteButtonHandler}){
     return(
@@ -12,6 +13,13 @@ function NoteManageButton({id, archived, onArchiveToggle, deleteButtonHandler}){
             </Button>
         </>
     )
+}
+
+NoteManageButton.propTypes = {
+    id: PropTypes.number.isRequired,
+    archived: PropTypes.bool.isRequired,
+    deleteButtonHandler: PropTypes.func.isRequired,
+    onArchiveToggle: PropTypes.func.isRequired,
 }
 
 export default NoteManageButton

@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import NoteManageButton from "./NoteManageButton";
+import { PropTypes } from 'prop-types'
 
 function NoteItemContent({id, title, body, archived, showNoteModal, onArchiveToggle, deleteButtonHandler, onHide}){
     return(
@@ -24,6 +25,17 @@ function NoteItemContent({id, title, body, archived, showNoteModal, onArchiveTog
             </Modal.Footer>
         </Modal>
     )
+}
+
+NoteItemContent.propTypes = {
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    archived: PropTypes.bool.isRequired,
+    showNoteModal: PropTypes.bool.isRequired,
+    deleteButtonHandler: PropTypes.func.isRequired,
+    onArchiveToggle: PropTypes.func.isRequired,
+    onHide: PropTypes.func.isRequired
 }
 
 export default NoteItemContent;

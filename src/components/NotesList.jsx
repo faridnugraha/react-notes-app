@@ -1,6 +1,7 @@
 import React from "react";
 import NoteItem from "./NoteItem"
 import { Row } from "react-bootstrap";
+import { PropTypes } from 'prop-types'
 
 function NotesList({notes, isArchived, onDelete, onArchiveToggle}){
     const filteredNotes = notes.filter((note) => note.archived === isArchived)
@@ -25,6 +26,13 @@ function NotesList({notes, isArchived, onDelete, onArchiveToggle}){
             </div>
         )
     }
+}
+
+NotesList.propTypes = {
+    notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isArchived: PropTypes.bool.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onArchiveToggle: PropTypes.func.isRequired
 }
 
 export default NotesList;

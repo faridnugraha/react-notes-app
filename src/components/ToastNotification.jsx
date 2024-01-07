@@ -1,6 +1,7 @@
 import React from "react";
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
+import { PropTypes } from 'prop-types'
 
 function ToastNotification({msg, showToast, toastHandler}){
     return(
@@ -24,6 +25,12 @@ function ToastNotification({msg, showToast, toastHandler}){
             </ToastContainer>
         </div>
     )
+}
+
+ToastNotification.propTypes = {
+    msg: PropTypes.string.isRequired,
+    showToast: PropTypes.bool.isRequired,
+    toastHandler: PropTypes.func.isRequired
 }
 
 export default ToastNotification;
