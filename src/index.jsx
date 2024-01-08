@@ -7,6 +7,11 @@ import NotesApp from './components/NotesApp'
 import './styles/style.css'
 import './styles/header.css'
 import './styles/noteApp.css'
+import { BrowserRouter } from 'react-router-dom'
 
 const root = createRoot(document.getElementById('root'))
-root.render(<NotesApp/>)
+root.render(
+    <BrowserRouter>
+        <NotesApp/>
+    </BrowserRouter>
+)

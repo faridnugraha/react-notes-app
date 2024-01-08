@@ -26,7 +26,7 @@ class NoteSearch extends React.Component{
 }
 
 NoteSearch.propTypes = {
-    onSearch: PropTypes.func.isRequired
+    // onSearch: PropTypes.func.isRequired
 }
 
 export default NoteSearch

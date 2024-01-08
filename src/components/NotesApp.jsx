@@ -1,131 +1,49 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import NoteList from "./NotesList"
-import NoteSearch from "./NoteSearch"
-import NoteInput from "./NoteInput"
-import ToastNotification from "./ToastNotification"
-import { getNotes } from "../utils/notes";
-import { Container, Tab, Tabs, Row, Col } from "react-bootstrap";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import HomePage from '../pages/HomePage';
+import AddNotePage from '../pages/AddNotePage';
+import NoteDetailPage from '../pages/NoteDetailPage';
+import { getNotes, addNotes, changeArchivedStatus, deleteNote } from '../utils/notes';
 
-class NotesApp extends React.Component{
-    constructor(props){
-        super(props)
+class ContactApp extends React.Component{
+  constructor(props){
+    super(props)
 
-        this.state = {
-            notes: getNotes(),
-            unfilteredNotes: getNotes(),
-            showToast: false,
-            toastMsg: ""
-        }
-
-        this.onDeleteNoteHandler = this.onDeleteNoteHandler.bind(this)
-        this.onAddNoteHandler = this.onAddNoteHandler.bind(this)
-        this.onArchiveToggleHandler2 = this.onArchiveToggleHandler2.bind(this)
-        this.onSearchNoteEventHandler = this.onSearchNoteEventHandler.bind(this)
-        this.toastHandler = this.toastHandler.bind(this)
+    this.state = {
+      notes: getNotes()
     }
 
-    toastHandler(show, msg=""){
-        this.setState(() => ({showToast: show, toastMsg: msg}))
-    }
+    this.onDeleteHandler = this.onDeleteHandler.bind(this)
+    this.onChangeArchivedHandler = this.onChangeArchivedHandler.bind(this)
+    this.onAddHandler = this.onAddHandler.bind(this)
+  }
 
-    onDeleteNoteHandler(id){
-        if(confirm("Are you sure want to delete this note?")){
-            const notes = this.state.notes.filter(note => note.id !== id)
-            const unfilteredNotes = this.state.unfilteredNotes.filter(note => note.id !== id)
-            this.setState({notes, unfilteredNotes})
-            this.setState(() => ({showToast:true, toastMsg:"Note has been deleted."}))
-        }
-    }
+  onDeleteHandler(id){
+    deleteNote(id)
+    this.setState({notes: getNotes()})
+  }
+  
+  onChangeArchivedHandler(id){
+    changeArchivedStatus(id)
+    this.setState({notes: getNotes()})
+  }
 
-    onAddNoteHandler({title, body}){
-        const currentDate = new Date()
-        this.setState((prevState) => {
-            return {
-                notes: [
-                    ...prevState.notes,
-                    {
-                        id: +new Date(),
-                        title: title,
-                        body: body,
-                        archived: false,
-                        createdAt: currentDate.toJSON()
-                    },
-                ],
-                unfilteredNotes: [
-                    ...prevState.unfilteredNotes,
-                    {
-                        id: +new Date(),
-                        title: title,
-                        body: body,
-                        archived: false,
-                        createdAt: currentDate.toJSON()
-                    }
-                ]
-            }
-        })
-        
-        this.setState(() => ({showToast:true, toastMsg:"Note has been added."}))
-    }
+  onAddHandler(note){
+    addNotes(note)
+    this.setState({notes: getNotes()})
+  }
 
-    onSearchNoteEventHandler(keyword){
-        if(keyword.length !== 0){
-            const notes = this.state.unfilteredNotes.filter((note) => note.title.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()))
-            this.setState({notes})
-        } else{
-            this.setState({notes: this.state.unfilteredNotes})
-        }
-    }
-
-    onArchiveToggleHandler2(id){
-        let archiveStatus = true
-        const notes = this.state.notes.map(note => {
-            if(note.id === id){
-                archiveStatus = !note.archived
-                return {...note, archived:archiveStatus}
-            }
-            return note
-        })
-        const unfilteredNotes = this.state.unfilteredNotes.map(note => {
-            if(note.id === id){
-                archiveStatus = !note.archived
-                return {...note, archived:archiveStatus}
-            }
-            return note
-        })
-        const toastMsg = archiveStatus?"Note has been archive":"Note has been removed from archive"
-        this.setState({notes: notes, unfilteredNotes: unfilteredNotes})
-        this.setState(() => ({showToast:true, toastMsg:toastMsg}))
-    }
-
-    render(){
-        return (
-            <>
-                <header>
-                    <Container>
-                        <Row>
-                            <Col md={6}>
-                                <h1 id="app-title">Notes App</h1>
-                                <NoteInput addNote={this.onAddNoteHandler}/>
-                                <NoteSearch onSearch={this.onSearchNoteEventHandler}/>
-                            </Col>
-                        </Row>
-                    </Container>
-                </header>
-                <Container className="notes-app">
-                    <Tabs variant="pills" defaultActiveKey="recent" id="category-tab" className="mt-4 mb-3 mx-auto tabs-custom" fill>
-                        <Tab eventKey="recent" title="Recent">
-                            <NoteList notes={this.state.notes} isArchived={false} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
-                        </Tab>
-                        <Tab eventKey="archive" title="Archive">
-                            <NoteList notes={this.state.notes} isArchived={true} onDelete={this.onDeleteNoteHandler} onArchiveToggle={this.onArchiveToggleHandler2}/>
-                        </Tab>
-                    </Tabs>
-                </Container>
-                <ToastNotification msg={this.state.toastMsg} showToast={this.state.showToast} toastHandler={this.toastHandler}/>
-            </>
-        )
-    }
+  render(){
+    return(
+      <>
+          <Routes>
+            <Route path="/" element={<HomePage notes={this.state.notes} deleteHandler={this.onDeleteHandler} archivedHandler={this.onChangeArchivedHandler}/>} />
+            <Route path="/note/:id" element={<NoteDetailPage/>} />
+            <Route path="/add" element={<AddNotePage addHandler={this.onAddHandler}/>} />
+          </Routes>
+      </>
+    )
+  }
 }
 
-export default NotesApp;
+export default ContactApp

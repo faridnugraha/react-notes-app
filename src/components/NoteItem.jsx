@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Row, Col, Card } from "react-bootstrap"
-import NoteItemModal from "./NoteItemModal";
+import { Col, Card } from "react-bootstrap"
 import NoteManageButton from "./NoteManageButton";
 import { PropTypes } from 'prop-types'
 
@@ -12,26 +11,23 @@ class NoteItem extends React.Component{
             showNoteModal: false
         }
 
-        this.contentModalHandler = this.contentModalHandler.bind(this)
         this.deleteButtonHandler = this.deleteButtonHandler.bind(this)
     }
 
-    contentModalHandler(show){
-        this.setState(() => ({showNoteModal: show}))
-    }
-
     deleteButtonHandler(ev){
-        ev.stopPropagation()
+        // ev.stopPropagation()
         this.props.onDelete(this.props.id)
     }
 
     render(){
+        const dateFormated = new Date(this.props.createdAt).toDateString()
         return(
             <>
                 <Col xs={12} sm={12} md={6} lg={4} xl={3}>
-                    <Card className="note-item" onClick={() => this.contentModalHandler(true)}>
+                    <Card className="note-item">
                         <Card.Body className="pb-0">
                             <Card.Title className="note-item__title">{this.props.title}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">{dateFormated}</Card.Subtitle>
                             <Card.Text style={{
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
@@ -48,16 +44,6 @@ class NoteItem extends React.Component{
                         </div>
                     </Card>
                 </Col>
-
-                <NoteItemModal 
-                    id={this.props.id} 
-                    title={this.props.title} 
-                    body={this.props.body} 
-                    archived={this.props.archived}
-                    showNoteModal={this.state.showNoteModal} 
-                    onArchiveToggle={this.props.onArchiveToggle}
-                    deleteButtonHandler={this.deleteButtonHandler}
-                    onHide={() => this.contentModalHandler(false)}/>
             </>
         )
     }
@@ -70,6 +56,7 @@ NoteItem.propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     archived: PropTypes.bool.isRequired,
+    createdAt: PropTypes.string.isRequired
 }
 
 export default NoteItem;

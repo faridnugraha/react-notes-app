@@ -8,7 +8,7 @@ function NoteManageButton({id, archived, onArchiveToggle, deleteButtonHandler}){
             <Button variant="secondary" className="me-2 rounded-circle pt-2" onClick={() => onArchiveToggle(id)}>
                 <span className="material-symbols-outlined">{archived?"unarchive":"archive"}</span>
             </Button>
-            <Button variant="danger" className="rounded-circle pt-2" onClick={deleteButtonHandler}>
+            <Button variant="danger" className="rounded-circle pt-2" onClick={() => deleteButtonHandler(id)}>
                 <span className="material-symbols-outlined">delete</span>
             </Button>
         </>
