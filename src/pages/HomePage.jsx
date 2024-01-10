@@ -6,6 +6,19 @@ import NoteHeader from "../components/NoteHeader"
 import ToastNotification from "../components/ToastNotification"
 import { Container, Tab, Tabs, Row, Col } from "react-bootstrap";
 import { PropTypes } from 'prop-types'
+import { useSearchParams } from "react-router-dom";
+
+function HomePageWrapper({notes, deleteHandler, archivedHandler}){
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const keyword = searchParams.get('keyword')
+
+    function changeSearchParams(keyword){
+        setSearchParams({keyword})
+    }
+
+    return <HomePage notes={notes} deleteHandler={deleteHandler} archivedHandler={archivedHandler} defaultKeyword={keyword} changeSearchParams={changeSearchParams}/>
+}
 
 class HomePage extends React.Component{
     constructor(props){
@@ -13,17 +26,33 @@ class HomePage extends React.Component{
 
         this.state = {
             showToast: false,
-            toastMsg: ""
+            toastMsg: "",
+            keyword: props.defaultKeyword || ''
         }
 
         this.toastHandler = this.toastHandler.bind(this)
+        this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this)
     }
 
     toastHandler(show, msg=""){
         this.setState(() => ({showToast: show, toastMsg: msg}))
     }
 
+    onKeywordChangeHandler(keyword){
+        this.setState(() => {
+            return {keyword}
+        })
+
+        this.props.changeSearchParams(keyword)
+    }
+
     render(){
+        const notes = this.props.notes.filter((note) => {
+            return note.title.toLowerCase().includes(
+                this.state.keyword.toLowerCase()
+            )
+        })
+
         return (
             <>
                 <header>
@@ -32,7 +61,7 @@ class HomePage extends React.Component{
                             <Col md={6}>
                                 <h1 id="app-title">Notes App</h1>
                                 <NoteHeader/>
-                                <NoteSearch onSearch={this.onSearchNoteEventHandler}/>
+                                <NoteSearch keyword={this.state.keyword} keywordHandler={this.onKeywordChangeHandler}/>
                             </Col>
                         </Row>
                     </Container>
@@ -40,10 +69,10 @@ class HomePage extends React.Component{
                 <Container className="notes-app">
                     <Tabs variant="pills" defaultActiveKey="recent" id="category-tab" className="mt-4 mb-3 mx-auto tabs-custom" fill>
                         <Tab eventKey="recent" title="Recent">
-                            <NoteList notes={this.props.notes} isArchived={false} onDelete={this.props.deleteHandler} onArchiveToggle={this.props.archivedHandler}/>
+                            <NoteList notes={notes} isArchived={false} onDelete={this.props.deleteHandler} onArchiveToggle={this.props.archivedHandler}/>
                         </Tab>
                         <Tab eventKey="archive" title="Archive">
-                            <NoteList notes={this.props.notes} isArchived={true} onDelete={this.props.deleteHandler} onArchiveToggle={this.props.archivedHandler}/>
+                            <NoteList notes={notes} isArchived={true} onDelete={this.props.deleteHandler} onArchiveToggle={this.props.archivedHandler}/>
                         </Tab>
                     </Tabs>
                 </Container>
@@ -53,10 +82,18 @@ class HomePage extends React.Component{
     }
 }
 
-HomePage.propTypes = {
+HomePageWrapper.propTypes = {
     notes: PropTypes.arrayOf(PropTypes.object).isRequired,
     deleteHandler : PropTypes.func.isRequired,
     archivedHandler : PropTypes.func.isRequired
 }
 
-export default HomePage;
+HomePage.propTypes = {
+    notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    deleteHandler : PropTypes.func.isRequired,
+    archivedHandler : PropTypes.func.isRequired,
+    defaultKeyword: PropTypes.string,
+    changeSearchParams: PropTypes.func.isRequired
+}
+
+export default HomePageWrapper;

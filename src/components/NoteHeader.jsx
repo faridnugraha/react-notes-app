@@ -14,7 +14,7 @@ class NoteHandler extends React.Component{
                     <p className="mb-0">
                         make your notes, elevate your works
                     </p>
-                    <Link to="/add">
+                    <Link to="/note/add">
                         <Button variant="primary" onClick={this.handleShow} className="ms-2 pt-2 rounded-circle">
                             <span className="material-symbols-outlined">
                                 stylus_note

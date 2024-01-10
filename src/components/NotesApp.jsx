@@ -19,8 +19,10 @@ class ContactApp extends React.Component{
   }
 
   onDeleteHandler(id){
-    deleteNote(id)
-    this.setState({notes: getNotes()})
+    if(confirm('Do you want to delete this note?')){
+      deleteNote(id)
+      this.setState({notes: getNotes()})
+    }
   }
   
   onChangeArchivedHandler(id){
@@ -39,7 +41,7 @@ class ContactApp extends React.Component{
           <Routes>
             <Route path="/" element={<HomePage notes={this.state.notes} deleteHandler={this.onDeleteHandler} archivedHandler={this.onChangeArchivedHandler}/>} />
             <Route path="/note/:id" element={<NoteDetailPage/>} />
-            <Route path="/add" element={<AddNotePage addHandler={this.onAddHandler}/>} />
+            <Route path="/note/add" element={<AddNotePage addHandler={this.onAddHandler}/>} />
           </Routes>
       </>
     )
