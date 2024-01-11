@@ -4,6 +4,7 @@ import HomePage from '../pages/HomePage';
 import AddNotePage from '../pages/AddNotePage';
 import NoteDetailPage from '../pages/NoteDetailPage';
 import { getNotes, addNotes, changeArchivedStatus, deleteNote } from '../utils/notes';
+import NotFoundPage from '../pages/NotFoundPage';
 
 class ContactApp extends React.Component{
   constructor(props){
@@ -40,8 +41,9 @@ class ContactApp extends React.Component{
       <>
           <Routes>
             <Route path="/" element={<HomePage notes={this.state.notes} deleteHandler={this.onDeleteHandler} archivedHandler={this.onChangeArchivedHandler}/>} />
-            <Route path="/note/:id" element={<NoteDetailPage/>} />
+            <Route path="/note/:id" element={<NoteDetailPage archivedHandler={this.onChangeArchivedHandler} deleteHandler={this.onDeleteHandler}/>} />
             <Route path="/note/add" element={<AddNotePage addHandler={this.onAddHandler}/>} />
+            <Route path="*" element={<NotFoundPage/>} />
           </Routes>
       </>
     )

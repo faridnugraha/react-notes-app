@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import NoteList from "../components/NotesList"
 import NoteSearch from "../components/NoteSearch"
 import NoteHeader from "../components/NoteHeader"
-import ToastNotification from "../components/ToastNotification"
 import { Container, Tab, Tabs, Row, Col } from "react-bootstrap";
 import { PropTypes } from 'prop-types'
 import { useSearchParams } from "react-router-dom";
@@ -25,17 +24,10 @@ class HomePage extends React.Component{
         super(props)
 
         this.state = {
-            showToast: false,
-            toastMsg: "",
             keyword: props.defaultKeyword || ''
         }
 
-        this.toastHandler = this.toastHandler.bind(this)
         this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this)
-    }
-
-    toastHandler(show, msg=""){
-        this.setState(() => ({showToast: show, toastMsg: msg}))
     }
 
     onKeywordChangeHandler(keyword){
@@ -76,7 +68,6 @@ class HomePage extends React.Component{
                         </Tab>
                     </Tabs>
                 </Container>
-                <ToastNotification msg={this.state.toastMsg} showToast={this.state.showToast} toastHandler={this.toastHandler}/>
             </>
         )
     }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import BackHomeButton from "./BackHomeButton";
 import { PropTypes } from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 
@@ -51,6 +52,7 @@ class NoteFormInput extends React.Component{
             <Container>
                 <Row className="justify-content-center mt-5">
                     <Col xs md={6}>
+                        <BackHomeButton/>
                         <Card>
                             <Card.Body>
                                 <Card.Title className="fw-bold">Add Note</Card.Title>

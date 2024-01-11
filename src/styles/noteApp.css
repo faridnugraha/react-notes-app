@@ -46,3 +46,20 @@
 .note-item__title{
     font-weight: 800;
 }
+
+.back-home-btn{
+    
+    allign-items: center;
+    color: #aaa;
+    margin-bottom: 10px;
+    pointer: cursor;
+    width: fit-content;
+}
+
+.back-home-btn:hover{
+    color: #0d6efd
+}
+
+.not-found img{
+    max-width: 400px
+}

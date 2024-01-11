@@ -25,7 +25,7 @@ class NoteItem extends React.Component{
             <>
                 <Col xs={12} sm={12} md={6} lg={4} xl={3}>
                         <Card className="note-item">
-                            <Link to={`/note/${this.props.id}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                            <Link to={`/note/${this.props.id}`} style={{ color: 'inherit', textDecoration: 'inherit'}} className=" note-item__body">
                                 <Card.Body className="pb-0">
                                     <Card.Title className="note-item__title">{this.props.title}</Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">{dateFormated}</Card.Subtitle>
@@ -41,7 +41,7 @@ class NoteItem extends React.Component{
                                     </Card.Text>
                                 </Card.Body>
                             </Link>
-                            <div className="d-flex justify-content-end me-3 my-3">
+                            <div className="d-flex justify-content-end me-3 mb-3">
                                 <NoteManageButton id={this.props.id} archived={this.props.archived} onArchiveToggle={this.props.onArchiveToggle} deleteButtonHandler={this.deleteButtonHandler}/>
                             </div>
                         </Card>

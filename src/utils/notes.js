@@ -53,9 +53,7 @@ function addNotes(note) {
 }
 
 function deleteNote(id) {
-    console.log(notes)
     notes = notes.filter((note) => note.id !== id);
-    console.log(notes)
 }
 
 export {
