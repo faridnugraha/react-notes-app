@@ -15,7 +15,7 @@ function NoteManageButton({id, archived, onArchiveToggle, deleteButtonHandler}){
 }
 
 NoteManageButton.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     archived: PropTypes.bool.isRequired,
     deleteButtonHandler: PropTypes.func.isRequired,
     onArchiveToggle: PropTypes.func.isRequired,

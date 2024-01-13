@@ -3,7 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import AddNotePage from '../pages/AddNotePage';
 import NoteDetailPage from '../pages/NoteDetailPage';
-import { getNotes, addNotes, changeArchivedStatus, deleteNote } from '../utils/notes';
+// import { getAllNotes, addNote, changeArchivedStatus, deleteNote } from '../utils/notes';
+import { getAllNotes, addNote, archiveNote, unarchiveNote, deleteNote } from '../utils/local-data';
 import NotFoundPage from '../pages/NotFoundPage';
 
 class ContactApp extends React.Component{
@@ -11,7 +12,7 @@ class ContactApp extends React.Component{
     super(props)
 
     this.state = {
-      notes: getNotes()
+      notes: getAllNotes()
     }
 
     this.onDeleteHandler = this.onDeleteHandler.bind(this)
@@ -22,18 +23,22 @@ class ContactApp extends React.Component{
   onDeleteHandler(id){
     if(confirm('Do you want to delete this note?')){
       deleteNote(id)
-      this.setState({notes: getNotes()})
+      this.setState({notes: getAllNotes()})
     }
   }
   
-  onChangeArchivedHandler(id){
-    changeArchivedStatus(id)
-    this.setState({notes: getNotes()})
+  onChangeArchivedHandler(id, isArchived){
+    if(isArchived){
+      unarchiveNote(id)
+    }else{
+      archiveNote(id)
+    }
+    this.setState({notes: getAllNotes()})
   }
 
   onAddHandler(note){
-    addNotes(note)
-    this.setState({notes: getNotes()})
+    addNote(note)
+    this.setState({notes: getAllNotes()})
   }
 
   render(){
@@ -41,6 +46,7 @@ class ContactApp extends React.Component{
       <>
           <Routes>
             <Route path="/" element={<HomePage notes={this.state.notes} deleteHandler={this.onDeleteHandler} archivedHandler={this.onChangeArchivedHandler}/>} />
+            <Route path="/note/*" element={<NotFoundPage/>} />
             <Route path="/note/:id" element={<NoteDetailPage archivedHandler={this.onChangeArchivedHandler} deleteHandler={this.onDeleteHandler}/>} />
             <Route path="/note/add" element={<AddNotePage addHandler={this.onAddHandler}/>} />
             <Route path="*" element={<NotFoundPage/>} />

@@ -25,14 +25,14 @@ class NoteItem extends React.Component{
     archivedButtonHandler(event){
         event.stopPropagation()
         event.preventDefault()
-        this.props.onArchiveToggle(this.props.id)
+        this.props.onArchiveToggle(this.props.id, this.props.archived)
     }
 
     render(){
         const dateFormated = new Date(this.props.createdAt).toDateString()
         return(
             <>
-                <Col xs={12} sm={12} md={6} lg={4} xl={3}>
+                <Col xs={12} sm={12} md={6} lg={4} xl={3} className="mb-3">
                     <Link to={`/note/${this.props.id}`} style={{ color: 'inherit', textDecoration: 'inherit'}} className=" note-item__body">
                         <Card className="note-item">
                             <Card.Body className="pb-0">
@@ -63,7 +63,7 @@ class NoteItem extends React.Component{
 NoteItem.propTypes = {
     onDelete: PropTypes.func.isRequired,
     onArchiveToggle: PropTypes.func.isRequired,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     archived: PropTypes.bool.isRequired,

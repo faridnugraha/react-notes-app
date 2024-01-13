@@ -1,25 +1,25 @@
 import React from "react";
 import { Container, Row, Col, Card} from "react-bootstrap";
 import NoteManageButton from "../components/NoteManageButton";
-import { getNoteById } from "../utils/notes";
+import { getNote } from "../utils/local-data";
 import { useParams } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import BackHomeButton from "../components/BackHomeButton";
 import { useNavigate } from 'react-router-dom'
+import NotFoundPage from "./NotFoundPage";
 
 
 function NoteDetailPageWrapper({archivedHandler, deleteHandler}){
     const { id } = useParams()
     const navigate = useNavigate()
-    return <NoteDetailPage navigate={navigate} id={Number(id)} archivedHandler={archivedHandler} deleteHandler={deleteHandler}/>
+    return <NoteDetailPage navigate={navigate} id={id} archivedHandler={archivedHandler} deleteHandler={deleteHandler}/>
 }
 
 class NoteDetailPage extends React.Component{
     constructor(props){
         super(props)
-
-        this.state = {
-            note : getNoteById(this.props.id)
+        this.state = {  
+            note : getNote(this.props.id)
         }
 
         this.onArchiveHandler = this.onArchiveHandler.bind(this)
@@ -27,8 +27,8 @@ class NoteDetailPage extends React.Component{
     }
 
     onArchiveHandler(){
-        this.props.archivedHandler(this.state.note.id)
-        this.setState({note: getNoteById(this.props.id)})
+        this.props.archivedHandler(this.state.note.id, this.state.note.archived)
+        this.setState({note: getNote(this.props.id)})
     }
     
     onDeleteHandler(){
@@ -37,6 +37,9 @@ class NoteDetailPage extends React.Component{
     }
 
     render(){
+        if (this.state.note === undefined) {
+           return <NotFoundPage/>
+        }
         return(
             <Container>
                 <Row className="justify-content-center mt-5">
@@ -68,7 +71,7 @@ NoteDetailPageWrapper.propTypes = {
 }
 
 NoteDetailPage.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     navigate: PropTypes.func.isRequired,
     archivedHandler: PropTypes.func.isRequired,
     deleteHandler: PropTypes.func.isRequired
