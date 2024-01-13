@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Card} from "react-bootstrap";
 import NoteManageButton from "../components/NoteManageButton";
-import { getNoteById, changeArchivedStatus, deleteNote } from "../utils/notes";
+import { getNoteById } from "../utils/notes";
 import { useParams } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import BackHomeButton from "../components/BackHomeButton";
@@ -62,8 +62,16 @@ class NoteDetailPage extends React.Component{
     }
 }
 
+NoteDetailPageWrapper.propTypes = {
+    archivedHandler: PropTypes.func.isRequired,
+    deleteHandler: PropTypes.func.isRequired
+}
+
 NoteDetailPage.propTypes = {
-    id: PropTypes.number.isRequired
+    id: PropTypes.number.isRequired,
+    navigate: PropTypes.func.isRequired,
+    archivedHandler: PropTypes.func.isRequired,
+    deleteHandler: PropTypes.func.isRequired
 }
 
 export default NoteDetailPageWrapper

@@ -86,7 +86,8 @@ NoteFormInputWrapper.propTypes = {
 }
 
 NoteFormInput.propTypes = {
-    addHandler: PropTypes.func.isRequired
+    addHandler: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired
 }
 
 export default NoteFormInputWrapper

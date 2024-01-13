@@ -1,4 +1,3 @@
-import React from "react";
 import NoteFormInputWrapper from "../components/NoteFormInput";
 import { PropTypes } from 'prop-types'
 

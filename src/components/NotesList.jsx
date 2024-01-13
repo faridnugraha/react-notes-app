@@ -1,4 +1,3 @@
-import React from "react";
 import NoteItem from "./NoteItem"
 import { Row } from "react-bootstrap";
 import { PropTypes } from 'prop-types'
